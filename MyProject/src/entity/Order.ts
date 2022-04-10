@@ -1,4 +1,4 @@
-import { Entity, ManyToOne, OneToMany, Column, JoinTable } from "typeorm";
+import { Entity, Column,OneToMany } from "typeorm";
 import { EmBase } from "./EmBase";
 // import { User } from "./User";
 
@@ -17,14 +17,9 @@ export class Order extends EmBase {
 
   @Column()
   city: string;
+  @Column({default:false})
+  completed: boolean;
 
   @OneToMany(() => OrderProduct, (orderProduct) => orderProduct.order)
-  public orderProducts!: OrderProduct[];
-};
-
-// @ManyToOne(() => User, (user) => user.orders, { nullable: false })
-// user: User;
-
-//   @ManyToMany(() => Product, (product)=> product.orders)
-//   @JoinTable()
-//   products: Product[];
+   orderProducts: OrderProduct[];
+}

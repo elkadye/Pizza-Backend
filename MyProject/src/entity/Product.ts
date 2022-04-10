@@ -26,5 +26,5 @@ export class Product extends EmBase {
   category: Category;
 
   @OneToMany(() => OrderProduct, (orderProduct) => orderProduct.product)
-  public orderProducts!: OrderProduct[];
+  orderProducts: OrderProduct[];
 }

@@ -1,5 +1,5 @@
 
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne,JoinTable } from "typeorm";
+import { Entity, Column, ManyToOne } from "typeorm";
 import { EmBase } from "./EmBase";
 import { Order } from "./Order";
 import { Product } from "./Product";
@@ -7,14 +7,11 @@ import { Product } from "./Product";
 @Entity()
 export class OrderProduct extends EmBase {
   @Column()
-  public qty: number;
-
-  @Column()
-  public status: string;
+  qty: number;
 
   @ManyToOne(() => Product, (product) => product.orderProducts)
-  public product: Product;
+  product: Product;
 
   @ManyToOne(() => Order, (order) => order.orderProducts)
-  public order: Order;
+  order: Order;
 }
