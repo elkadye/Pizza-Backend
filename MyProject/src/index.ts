@@ -1,9 +1,22 @@
-import { AppDataSource } from "./data-source"
-import { User } from "./entity/User"
+import { AppDataSource } from "./data-source";
+import express, { application } from "express";
 
+const app = express();
 
-AppDataSource.initialize().then(async () => {
+const main = async () => {
+  try {
+      await AppDataSource.initialize();
+      console.log("connected to DB")
+      app.use(express.json());
+      app.listen(8080,()=>{
+          console.log("App running on port 8080")
+      })
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-   
-
-}).catch(error => console.log(error))
+main();
+// AppDataSource.initialize()
+//   .then(async () => {})
+//   .catch((error) => console.log(error));
