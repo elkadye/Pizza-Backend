@@ -41,19 +41,6 @@ router.post("/order", async (req, res) => {
   }
 });
 
-// Fetch all orders and their products
-router.get("/orders", async (req, res) => {
-  try {
-    const orders = await Order.find({
-      relations: { orderProducts: {product:true}  },
-    });
-    return res.json(orders);
-  } catch {
-    return res.status(404);
-  }
-});
-
-
 //Fetch order by id
 router.get("/order/:order_id", async (req, res) => {
   try {
@@ -71,8 +58,21 @@ router.get("/order/:order_id", async (req, res) => {
   }
 });
 
+// Fetch all orders and their products
+router.get("/order", async (req, res) => {
+  try {
+    const orders = await Order.find({
+      relations: { orderProducts: {product:true}  },
+    });
+    return res.json(orders);
+  } catch {
+    return res.status(404);
+  }
+});
+
+
 // FETCH COMPLETED order
-router.get("/orders/completed", async (req, res) => {
+router.get("/order/completed", async (req, res) => {
   try {
     const orders = await Order.find({
       where: { completed:true },

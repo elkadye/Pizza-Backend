@@ -5,7 +5,7 @@ import { Product } from "../entity/Product";
 
 const router = express.Router();
 
-router.post("/product/:category_id", async (req, res) => {
+router.post("/products/:category_id", async (req, res) => {
   try {
       const {category_id} = req.params
        const category = await Category.findOneBy({ id: +category_id });
@@ -39,7 +39,7 @@ router.get("/products", async (req, res) => {
   }
 });
 
-router.get("/product/:product_id", async (req, res) => {
+router.get("/products/:product_id", async (req, res) => {
   try {
     const { product_id } = req.params;
     const product = await Product.find({
