@@ -3,9 +3,10 @@ import express, { application } from "express";
 import { categoryRouter } from "./routes/category";
 import { productRouter } from "./routes/product";
 import { orderRouter } from "./routes/order";
-
+var cors = require("cors");
 
 const app = express();
+app.use(cors());
 
 const main = async () => {
   try {
