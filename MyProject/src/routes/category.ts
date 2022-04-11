@@ -23,7 +23,7 @@ router.get("/categories", async (req, res) => {
     const categories = await Category.find({
       relations: { products: true },
     });
-    res.send(categories);
+  
     return res.json(categories);
   } catch {
     return res.status(404);
