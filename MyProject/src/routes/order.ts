@@ -45,7 +45,7 @@ router.post("/order", async (req, res) => {
 router.get("/orders", async (req, res) => {
   try {
     const orders = await Order.find({
-      relations: { orderProducts: true },
+      relations: { orderProducts: {product:true}  },
     });
     return res.json(orders);
   } catch {
@@ -60,7 +60,7 @@ router.get("/order/:order_id", async (req, res) => {
     const { order_id } = req.params;
     const order = await Order.find({
       where: { id: +order_id },
-      relations: { orderProducts: true},
+      relations: { orderProducts: { product: true } },
     });
     if (order.length === 0) {
       return res.status(404).json({ msg: "order doesn't exist" });
@@ -103,25 +103,6 @@ router.get("/order/:order_id/completed", async (req, res) => {
     return res.status(404);
   }
 });
-
-// // Fetch order by id
-// router.get("/order/:order_id", async (req, res) => {
-//   try {
-//     const { order_id } = req.params;
-//     const order = await AppDataSource.getRepository(Order)
-//     .createQueryBuilder("order")
-//     .where("order.id=:id",{id: +order_id})
-//     .getOne()
-
-//     if (!order) {
-//       return res.status(404).json({ msg: "order doesn't exist" });
-//     }
-//     return res.json(order);
-//   } catch {
-//     return res.status(404);
-//   }
-// });
-
 
 
 export { router as orderRouter };
