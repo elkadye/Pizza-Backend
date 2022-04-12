@@ -19,7 +19,7 @@ router.post("/order", async (req, res) => {
     await order.save();
     for (let i = 0; i < orderItems.length; i++) {
         const item=orderItems[i]
-      const product = await Product.findOneBy({ id: +item.product});
+      const product = await Product.findOneBy({ id: +item.id});
       //should move if !product to the beginning  as to avoid creating an empty order
       if (!product) {
         return res.status(404).json({ msg: "product doesn't exist" });
@@ -27,7 +27,7 @@ router.post("/order", async (req, res) => {
       const orderProduct= OrderProduct.create({
           product,
           order,
-          qty: +item.qty
+          qty: +item.orderQty
       })
       await orderProduct.save();
     }
@@ -97,8 +97,11 @@ router.get("/order/:order_id/completed", async (req, res) => {
     }
     order.completed=true
     await  order.save();
-
-    return res.json(order);
+  const updatedOrders = await Order.find({
+    where: { id: +order_id },
+    relations: { orderProducts: { product: true } },
+  });
+    return res.json(updatedOrders);
   } catch {
     return res.status(404);
   }
